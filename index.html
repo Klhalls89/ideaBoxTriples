@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,800" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <nav>
@@ -20,7 +21,7 @@
         <p>Title</p>
         <input class="title-input" type="text">
         <p>Body</p>
-        <input class="body-input" type="text">
+        <textarea class="body-input"></textarea>
         <button class="save-btn">Save</button>
       </section>
     </header>
@@ -31,14 +32,18 @@
         <option value="plausable">Plausable</option>
         <option value="Genius">Genius</option>
       </select>
-      <article>
-        <p>Card title</p>
-        <p>Body information here</p>
-        <i></i>
-        <i></i>
-        <p>Quality Name: </p>
-        <i></i>
-      </article>
+      <section class="idea-card-sect">
+        <article class="card-art">
+          <p class="title-card-style">Card title</p>
+          <p>Body information here</p>
+        </article>
+        <article class="quality-art">
+          <img class="card-btns" src="./assets/downvote.svg">
+          <img class="card-btns" src="./assets/upvote.svg">
+          <p class="quality-name">Quality: swill</p>
+          <img class="card-btns" src="./assets/delete.svg">
+        </article>
+      </section>
     </main>
   </body>
   <script type="text/javascript" src="./scripts/idea.js"></script>

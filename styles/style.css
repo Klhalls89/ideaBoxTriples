@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #f9f9fa;
   font-family: 'Open Sans', sans-serif;
@@ -73,11 +77,10 @@ p {
 }
 
 .title-input {
-  border-radius: 5px;
   height: 15%;
   width: 99%;
   margin-bottom: 20px;
-  border: solid 2px #d2cccd;
+ 
 }
 
 .body-input {
@@ -86,8 +89,6 @@ p {
   width: 99%;
   /*overflow-wrap: break-word;*/
   /*trying to wrap input text to the next line*/
-  border-radius: 5px;
-  border: solid 2px #d2cccd;
 }
 
 .save-btn {
@@ -101,4 +102,51 @@ p {
   font-weight: 800;
 }
 
+/*begin main styles*/
+
+.card-btns {
+  height: 30px;
+  width: 30px;
+  padding: 5px 0px 0px 5px; 
+}
+
+.title-card-style {
+  font-weight: 800;
+  font-size: 25px;
+  color: #524649;
+
+}
+
+.idea-card-sect{
+  margin: auto;
+  display: grid;
+  grid-template-rows: 4fr 1fr;
+  width: 60%;
+  height: 200px;
+  padding: 0px 10px;
+}
+
+.card-art {
+  border-bottom: 2px solid #d2cccd;
+}
+
+.quality-art {
+display: grid;
+grid-template-columns: 40px 40px 1fr 40px;
+
+}
+
+
+.idea-card-sect,
+.body-input,
+.title-input {
+  border: 2px solid #d2cccd;
+  border-radius: 5px;
+}
+
+.quality-name {
+  font-size: 17px;
+  font-weight: 800;
+  padding: 8px 0px 0px 8px;
+}
 
