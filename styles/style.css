@@ -1,0 +1,54 @@
+body {
+  background-color: #f9f9fa;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*begin nav styles*/
+
+nav {
+  background-color: #524649;
+  display: flex;
+  font-weight: 800;
+  color: #b2a1b1;
+}
+
+.logo {
+  font-size: 37.5px;
+  padding: 10px 20px 10px 20px;
+}
+
+span {
+ color: #fff;
+}
+
+.search-contain {
+  margin-left: auto;
+  padding: 12px 20px 10px 0px;
+  display: flex;
+}
+
+/*what is small blue line in search height*/
+.search-bar {
+  height: 25px;
+  width: 280px;
+  flex: 1;
+  border: solid 2px #d2cccd;
+  border-radius: 5px 0px 0px 5px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #d2cccd;
+  padding-left: 5px;
+}
+
+.search-btn {
+  background-color: #d2cccd;
+  color: #fff;
+  border: solid 2px #d2cccd;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.fa-search {
+  font-size: 20px;
+}
+
+/*begin header style*/
