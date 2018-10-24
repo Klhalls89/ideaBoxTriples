@@ -3,20 +3,20 @@
 // var bodyInput = document.querySelector('.js-body-input');
 var saveBtn = document.querySelector('.js-save-btn');
 // var cardRepo = document.querySelector('js-card-repo');
+var cardRepo = document.querySelector('.js-card-repo');
 
 saveBtn.addEventListener('click', cardPrepend);
 
-
 function cardPrepend() {
+console.log('Hello');
   var timeStamp = Date.now()
-  var titleInput = document.querySelector('.js-title-input');
-  var bodyInput = document.querySelector('.js-body-input');
-  var cardRepo = document.querySelector('js-card-repo');
-  cardRepo.insertAdjacentHTML('afterbeing',
-    `<section class="idea-card-sect">
+  var titleInput = document.querySelector('.js-title-input').value;
+  var bodyInput = document.querySelector('.js-body-input').value;
+  cardRepo.insertAdjacentHTML('afterbegin',
+    `<section data-key="${timeStamp}" class="idea-card-sect">
           <article class="card-art">
-            <p class="title-card-style">Card title</p>
-            <p>Body information here</p>
+            <p class="title-card-style">${titleInput}</p>
+            <p>${bodyInput}</p>
           </article>
           <article class="quality-art">
             <img class="card-btns" src="./assets/downvote.svg">
@@ -26,4 +26,4 @@ function cardPrepend() {
           </article>
         </section>`
       );
-}
+};
