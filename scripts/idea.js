@@ -1,12 +1,13 @@
 class Idea {
-  constructor(title, body, quality, id) {
+  constructor(title, body, quality) {
     this.title = title;
     this.body = body;
     this.quality = quality || 'swill';
-    this.id = id;
+    this.id = Date.now();
   }
 
   saveToStorage() {
+    
   // only save the instance to storage
   }
 
@@ -22,3 +23,5 @@ class Idea {
   // change the quality of the card defualt to swill
   }
 }
+
+// module.exports = Idea;
