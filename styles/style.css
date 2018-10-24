@@ -121,7 +121,7 @@ p {
   display: grid;
   grid-template-rows: 4fr 1fr;
   height: 200px;
-  margin: auto;
+  margin: 0px auto 20px auto;
   padding: 0px 16px;
   width: 60%;
 }
