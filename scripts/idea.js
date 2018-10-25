@@ -7,8 +7,8 @@ class Idea {
   }
 
   saveToStorage() {
-    
-  // only save the instance to storage
+    var stringIdea = JSON.stringify(this)
+    localStorage.setItem(this.id, stringIdea)
   }
 
   deleteFromStorage() {

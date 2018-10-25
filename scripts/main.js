@@ -3,18 +3,26 @@ var cardRepo = document.querySelector('.js-card-repo');
 var titleInput = document.querySelector('.js-title-input');
 var bodyInput = document.querySelector('.js-body-input');
 
+parseCard();
 
-saveBtn.addEventListener('click', cardPrepend);
+saveBtn.addEventListener('click', createNewIdea);
 
-function cardPrepend() {
-  var card = new Idea(titleInput.value, bodyInput.value);
-  console.log(card);
+function createNewIdea(){
+   var idea = new Idea(titleInput.value, bodyInput.value);
+   cardPrepend(idea.id, idea.title, idea.body);
+   idea.saveToStorage();
+    clearInputs(); 
+}
+
+
+
+function cardPrepend(id, title, body) {
   // var timeStamp = Date.now()
   cardRepo.insertAdjacentHTML('afterbegin',
-    `<section data-key="${card.id}" class="idea-card-sect">
+    `<section data-key="${id}" class="idea-card-sect">
           <article class="card-art">
-            <p class="title-card-style">${card.title}</p>
-            <p>${card.body}</p>
+            <p class="title-card-style">${title}</p>
+            <p>${body}</p>
           </article>
           <article class="quality-art">
             <img class="card-btns" src="./assets/downvote.svg">
@@ -24,4 +32,26 @@ function cardPrepend() {
           </article>
         </section>`
       );
+  
 };
+
+function clearInputs() {
+  titleInput.value = '';
+  bodyInput.value = '';
+};
+
+function parseCard() {
+  var ideaKeyValue;
+  var ideaString;
+  var ideaObject;
+
+  for(var i = 0; i < localStorage.length; i++){
+    ideaKeyValue = localStorage.key(i);
+    ideaString = localStorage.getItem(ideaKeyValue);
+    ideaObject = JSON.parse(ideaString);
+    cardPrepend(ideaObject.id, ideaObject.title, ideaObject.body);
+  }
+}
+
+
+
