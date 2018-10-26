@@ -6,9 +6,10 @@ class Idea {
     this.id = Date.now();
   }
 
-  saveToStorage() {
-    var stringIdea = JSON.stringify(this)
-    localStorage.setItem(this.id, stringIdea)
+  
+  saveToStorage(array) {
+    var stringArray = JSON.stringify(array);
+    localStorage.setItem('ideasKey', stringArray);
   }
 
   deleteFromStorage() {
