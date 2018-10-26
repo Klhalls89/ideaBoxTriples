@@ -4,9 +4,25 @@ var titleInput = document.querySelector('.js-title-input');
 var bodyInput = document.querySelector('.js-body-input');
 var ideaArray = [];
 
-parseCardArray();
+setInitState();
+
+function setInitState() {
+  if(localStorage.length === 0) {
+    return
+  } else {
+    parseCardArray();
+  }
+}
 
 saveBtn.addEventListener('click', createNewIdea);
+cardRepo.addEventListener('click', deleteCard);
+
+function deleteCard(event){
+ if (event.target.classList.contains('js-delete')) {
+  event.target.closest('.js-card').remove();
+  // deleteFromStorage()
+}
+}
 
 function createNewIdea() {
    var idea = new Idea(titleInput.value, bodyInput.value);
@@ -18,7 +34,7 @@ function createNewIdea() {
 
 function cardPrepend(id, title, body) {
   cardRepo.insertAdjacentHTML('afterbegin',
-    `<section data-key="${id}" class="idea-card-sect">
+    `<section data-key="${id}" class="idea-card-sect js-card">
           <article class="card-art">
             <p class="title-card-style">${title}</p>
             <p>${body}</p>
@@ -27,7 +43,7 @@ function cardPrepend(id, title, body) {
             <img class="card-btns" src="./assets/downvote.svg">
             <img class="card-btns" src="./assets/upvote.svg">
             <p class="quality-name">Quality: swill</p>
-            <img class="card-btns" src="./assets/delete.svg">
+            <img class="card-btns js-delete" src="./assets/delete.svg">
           </article>
         </section>`
       );

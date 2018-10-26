@@ -12,9 +12,12 @@ class Idea {
     localStorage.setItem('ideasKey', stringArray);
   }
 
-  deleteFromStorage() {
-  // delete instance from storage
-  }
+  // deleteFromStorage(array) {
+  // //parse array from local stroage
+  // JSON.parse(array)
+  // //delete idea from array
+  // //stringafy to put it back in local storage
+  // }
 
   updateSelf() {
   // update title or body on idea card
