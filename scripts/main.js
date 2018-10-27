@@ -57,30 +57,18 @@ function clearInputs() {
 
 function parseCardArray() {
   var ideaArrayString;
-  
   ideaArrayString = localStorage.getItem('ideasKey');
   ideaArray = JSON.parse(ideaArrayString);
-  
   ideaArray.forEach(function(ideaInst) {
-    cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body);
+  cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body);
+  reinstanciateIdeas(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality);
   });
 }
 
-// function parseCard() {
-//   var ideaKeyValue;
-//   var ideaString;
-//   var ideaObject;
-
-
-  // for(var i = 0; i < localStorage.length; i++){
-    // ideaKeyValue = localStorage.key(i);
-    // ideaString = localStorage.getItem(ideaKeyValue);
-    // ideaObject = JSON.parse(ideaString);
-    // ideaArray.push(ideaObject);
-    // cardPrepend(ideaObject.id, ideaObject.title, ideaObject.body);
-
-  // }
-// }
+function reinstanciateIdeas(title, body, id, quality){
+  var idea = new Idea(title, body, id, quality);
+  idea.test();
+}
 
 
 

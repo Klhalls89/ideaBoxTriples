@@ -1,9 +1,9 @@
 class Idea {
-  constructor(title, body, quality) {
+  constructor(title, body, id, quality) {
     this.title = title;
     this.body = body;
     this.quality = quality || 'swill';
-    this.id = Date.now();
+    this.id = id || Date.now();
   }
 
   
@@ -18,6 +18,10 @@ class Idea {
   // //delete idea from array
   // //stringafy to put it back in local storage
   // }
+
+  test(){
+    console.log('success')
+  }
 
   updateSelf() {
   // update title or body on idea card
