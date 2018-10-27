@@ -19,7 +19,16 @@ cardRepo.addEventListener('click', deleteCard);
 
 function deleteCard(event){
  if (event.target.classList.contains('js-delete')) {
+  var cardKey = event.target.closest('.js-card').dataset.key;
+  console.log(cardKey);
+  console.log(ideaArray)
+  ideaArray.forEach(function(ideaInst){
+    if (ideaInst.id === cardKey) {
+      ideaInst.deleteFromStorage(cardKey);
+    }
+  });
   event.target.closest('.js-card').remove();
+
   // deleteFromStorage()
 }
 }

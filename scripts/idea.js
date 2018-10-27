@@ -12,12 +12,21 @@ class Idea {
     localStorage.setItem('ideasKey', stringArray);
   }
 
-  // deleteFromStorage(array) {
-  // //parse array from local stroage
-  // JSON.parse(array)
-  // //delete idea from array
-  // //stringafy to put it back in local storage
-  // }
+  deleteFromStorage(key) {
+  var ideaArrayString;
+  ideaArrayString = localStorage.getItem('ideasKey');
+  ideaArray = JSON.parse(ideaArrayString);
+  var filteredArray = ideaArray.filter(function (ideaInst) {
+    if (ideaInst.id !== key){
+      return ideaInst;
+    }
+  });
+  ideaArray = filteredArray;
+
+ 
+  //delete idea from array
+  //stringafy to put it back in local storage
+  }
 
   test(){
     console.log('success')
