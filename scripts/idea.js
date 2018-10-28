@@ -1,9 +1,9 @@
 class Idea {
-  constructor(title, body, quality) {
+  constructor(title, body, id, quality) {
     this.title = title;
     this.body = body;
     this.quality = quality || 'swill';
-    this.id = Date.now();
+    this.id = id || Date.now();
   }
 
   
@@ -12,12 +12,17 @@ class Idea {
     localStorage.setItem('ideasKey', stringArray);
   }
 
-  // deleteFromStorage(array) {
-  // //parse array from local stroage
-  // JSON.parse(array)
-  // //delete idea from array
-  // //stringafy to put it back in local storage
-  // }
+  deleteFromStorage(key) {
+    var newIdeaArray = ideaArray.filter(function (ideaInst) {
+      if (ideaInst.id !== key){
+        return ideaInst;
+      }
+    });
+
+    ideaArray = newIdeaArray;
+    this.saveToStorage(ideaArray);
+
+  }
 
   updateSelf() {
   // update title or body on idea card
