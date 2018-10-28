@@ -10,7 +10,7 @@ function setInitState() {
   if(localStorage.length === 0) {
     return
   } else {
-    parseCardArray();
+    reinstanciateParseCardArray();
   }
 }
 
@@ -20,17 +20,17 @@ cardRepo.addEventListener('click', deleteCard);
 function deleteCard(event){
  if (event.target.classList.contains('js-delete')) {
   var cardKey = event.target.closest('.js-card').dataset.key;
-  console.log(cardKey);
-  console.log(ideaArray)
+  cardKey = parseInt(cardKey);
+
   ideaArray.forEach(function(ideaInst){
     if (ideaInst.id === cardKey) {
       ideaInst.deleteFromStorage(cardKey);
     }
   });
-  event.target.closest('.js-card').remove();
 
-  // deleteFromStorage()
-}
+  console.log(ideaArray);
+  event.target.closest('.js-card').remove();
+  }
 }
 
 function createNewIdea() {
@@ -64,20 +64,23 @@ function clearInputs() {
   bodyInput.value = '';
 };
 
-function parseCardArray() {
+
+function reinstanciateParseCardArray() {
   var ideaArrayString;
   ideaArrayString = localStorage.getItem('ideasKey');
-  ideaArray = JSON.parse(ideaArrayString);
-  ideaArray.forEach(function(ideaInst) {
-  cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body);
-  reinstanciateIdeas(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality);
+
+  ideaArray.length = 0;
+
+  var jsonIdeaArray = JSON.parse(ideaArrayString); 
+  jsonIdeaArray.forEach(function(ideaInst) {
+    cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body);
+    var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality);
+
+    ideaArray.push(idea);
+   
   });
 }
 
-function reinstanciateIdeas(title, body, id, quality){
-  var idea = new Idea(title, body, id, quality);
-  idea.test();
-}
 
 
 

@@ -13,23 +13,15 @@ class Idea {
   }
 
   deleteFromStorage(key) {
-  var ideaArrayString;
-  ideaArrayString = localStorage.getItem('ideasKey');
-  ideaArray = JSON.parse(ideaArrayString);
-  var filteredArray = ideaArray.filter(function (ideaInst) {
-    if (ideaInst.id !== key){
-      return ideaInst;
-    }
-  });
-  ideaArray = filteredArray;
+    var newIdeaArray = ideaArray.filter(function (ideaInst) {
+      if (ideaInst.id !== key){
+        return ideaInst;
+      }
+    });
 
- 
-  //delete idea from array
-  //stringafy to put it back in local storage
-  }
+    ideaArray = newIdeaArray;
+    this.saveToStorage(ideaArray);
 
-  test(){
-    console.log('success')
   }
 
   updateSelf() {
