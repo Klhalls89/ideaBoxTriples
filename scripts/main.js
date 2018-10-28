@@ -15,7 +15,30 @@ function setInitState() {
 }
 
 saveBtn.addEventListener('click', createNewIdea);
-cardRepo.addEventListener('click', deleteCard);
+cardRepo.addEventListener('click', functionCaller);
+
+function functionCaller(){
+  upvote();
+  deleteCard();
+}
+
+function upvote(){
+  if (event.target.classList.contains('js-upvote')) {
+  var cardKey = event.target.closest('.js-card').dataset.key;
+  cardKey = parseInt(cardKey);
+  var foundIdea;
+
+  ideaArray.forEach(function(ideaInst){
+    if (ideaInst.id === cardKey) {
+      ideaInst.updateQuality();
+      foundIdea = ideaInst; 
+      }
+    });
+  }
+      cardKey = cardKey.toString();
+      document.getElementById(cardKey).innerText = `Quality: ${foundIdea.quality}`;
+}
+
 
 function deleteCard(event){
  if (event.target.classList.contains('js-delete')) {
@@ -35,13 +58,13 @@ function deleteCard(event){
 
 function createNewIdea() {
    var idea = new Idea(titleInput.value, bodyInput.value);
-   cardPrepend(idea.id, idea.title, idea.body);
+   cardPrepend(idea.id, idea.title, idea.body, idea.quality);
    ideaArray.push(idea);
    idea.saveToStorage(ideaArray);
    clearInputs(); 
 }
 
-function cardPrepend(id, title, body) {
+function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
     `<section data-key="${id}" class="idea-card-sect js-card">
           <article class="card-art">
@@ -49,9 +72,9 @@ function cardPrepend(id, title, body) {
             <p>${body}</p>
           </article>
           <article class="quality-art">
-            <img class="card-btns" src="./assets/downvote.svg">
-            <img class="card-btns" src="./assets/upvote.svg">
-            <p class="quality-name">Quality: swill</p>
+            <img class="card-btns js-downvote" src="./assets/downvote.svg">
+            <img class="card-btns js-upvote" src="./assets/upvote.svg">
+            <p id="${id}" class="quality-name js-quality">Quality: ${quality}</p>
             <img class="card-btns js-delete" src="./assets/delete.svg">
           </article>
         </section>`

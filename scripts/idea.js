@@ -2,8 +2,9 @@ class Idea {
   constructor(title, body, id, quality) {
     this.title = title;
     this.body = body;
-    this.quality = quality || 'swill';
+    this.quality = 'Swill';
     this.id = id || Date.now();
+    this.qualityIndex = 0;
   }
 
   
@@ -29,7 +30,11 @@ class Idea {
   }
 
   updateQuality() {
-  // change the quality of the card defualt to swill
+ var qualityArray = ['Swill','Plausible','Genius'];
+  if (this.qualityIndex <= 1) {
+    this.qualityIndex++
+  }
+  this.quality = qualityArray[this.qualityIndex];
   }
 }
 
