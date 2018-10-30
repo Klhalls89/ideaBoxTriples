@@ -17,12 +17,7 @@ function setInitState() {
 
 saveBtn.addEventListener('click', createNewIdea);
 cardRepo.addEventListener('click', functionCaller);
-cardRepo.addEventListener('keyup', function(event){ 
-  if (event.keyCode === 13) {
-    cardUpdate();
-  }
- });
-
+cardRepo.addEventListener('focusout', cardUpdate);
 searchInput.addEventListener('keyup', filterCards);
 
 function filterCards() {
@@ -108,32 +103,39 @@ function createNewIdea() {
 }
 
 function cardUpdate() {
-  alert('hey there');
-  // if (event.target.classList.contains('js-card-inputs')) {
-  //   var cardKey = event.target.closest('.js-card').dataset.key;
-  //   cardKey = parseInt(cardKey);
+  console.log('hello')
+  if (event.target.classList.contains('js-card-title-input')) {
+  var cardKey = event.target.closest('.js-card').dataset.key;
+  cardKey = parseInt(cardKey);
+  
+  ideaArray.forEach(function(ideaInst){
+    if (ideaInst.id === cardKey) {
+      ideaInst.updateSelf(event.target.innerText, event.target.nextElementSibling.innerText); 
+      ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
 
-  //   var cardTitleInput = document.querySelector('.js-card-title-input');
-  //   var cardBodyInput = document.querySelector('.js-card-body-input');
-
-  //   console.log(cardTitleInput);
-  //   console.log(cardBodyInput);
-
-  //   // ideaArray.forEach(function(ideaInst){
-  //   //   if (ideaInst.id === cardKey) {
-  //   //     ideaInst.updateSelf(cardTitleInput, cardBodyInput);
-  //   //   }
-  //   // });
-
-  // }
+  if (event.target.classList.contains('js-card-body-input')) {
+  var cardKey = event.target.closest('.js-card').dataset.key;
+  cardKey = parseInt(cardKey);
+  
+  ideaArray.forEach(function(ideaInst){
+    if (ideaInst.id === cardKey) {
+      ideaInst.updateSelf(event.target.previousElementSibling.innerText, event.target.innerText); 
+      ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
 }
+
 
 function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
     `<section data-key="${id}" class="idea-card-sect js-card">
           <article class="card-art">
-            <p class="title-card-style js-card-inputs">${title}</p>
-            <p class="js-card-inputs">${body}</p>
+            <p contentEditable="true" class="title-card-style js-card-title-input js-card-inputs">${title}</p>
+            <p contentEditable="true" class="js-card-inputs js-card-body-input">${body}</p>
           </article>
           <article class="quality-art">
             <img class="card-btns js-downvote" src="./assets/downvote.svg">
@@ -167,6 +169,17 @@ function reinstanciateParseCardArray() {
    
   });
 }
+
+// funcfion(event.target.value)
+
+// function (quality)
+// if(all) {
+//   return ;
+// }
+
+// var filteredarray = originalArray.filter( card => {
+//   return card.quality === quality 
+// })
 
 
 
