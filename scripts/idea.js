@@ -1,10 +1,10 @@
 class Idea {
-  constructor(title, body, id, quality) {
+  constructor(title, body, id, quality, qualityIndex) {
     this.title = title;
     this.body = body;
     this.quality = quality || 'Swill';
     this.id = id || Date.now();
-    this.qualityIndex = 0;
+    this.qualityIndex = qualityIndex || 0;
   }
 
   

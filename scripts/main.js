@@ -160,8 +160,8 @@ function reinstanciateParseCardArray() {
 
   var jsonIdeaArray = JSON.parse(ideaArrayString); 
   jsonIdeaArray.forEach(function(ideaInst) {
-    cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body, ideaInst.quality);
-    var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality);
+    cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body, ideaInst.quality, ideaInst.qualityIndex);
+    var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality, ideaInst.qualityIndex);
 
     ideaArray.push(idea);
    
