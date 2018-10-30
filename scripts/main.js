@@ -22,25 +22,23 @@ cardRepo.addEventListener('keyup', function(event){
     cardUpdate();
   }
  });
+
 searchInput.addEventListener('keyup', filterCards);
 
 function filterCards() {
-
   var allCards = document.querySelectorAll('.js-card');
   console.log(allCards);
 
   allCards.forEach(function(card) {
     var title = card.children[0].children[0];
     var body = card.children[0].children[1];
-    
-    if ( !title.innerText.includes(searchInput.value) || !body.innerText.includes(searchInput.value)) {
-      console.log(card)
+
+    if ( !title.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) && !body.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ) {
       card.classList.add('hidden');
     } else {
       card.classList.remove('hidden');
     }
-
-  })
+  });
 
 }
 
