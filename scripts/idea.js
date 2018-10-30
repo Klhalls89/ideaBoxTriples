@@ -2,16 +2,9 @@ class Idea {
   constructor(title, body, id, quality, qualityIndex) {
     this.title = title;
     this.body = body;
-    this.quality = quality || 'Swill';
     this.id = id || Date.now();
+    this.quality = quality || 'Swill';
     this.qualityIndex = qualityIndex || 0;
-  }
-
-  
-  saveToStorage(array) {
-    localStorage.clear();
-    var stringArray = JSON.stringify(array);
-    localStorage.setItem('ideasKey', stringArray);
   }
 
   deleteFromStorage(key) {
@@ -23,13 +16,17 @@ class Idea {
 
     ideaArray = newIdeaArray;
     this.saveToStorage(ideaArray);
-
+  }
+  
+  saveToStorage(array) {
+    localStorage.clear();
+    var stringArray = JSON.stringify(array);
+    localStorage.setItem('ideasKey', stringArray);
   }
 
   updateSelf(title, body) {
     this.title = title;
     this.body = body;
-  // update title or body on idea card
   }
 
   updateQuality(vote) {
@@ -38,19 +35,18 @@ class Idea {
     if (vote === 'up') {
       if (this.qualityIndex <= 1) {
         this.qualityIndex++
-      } else if(this.qualityIndex === 2) {
-        return
+      } else if (this.qualityIndex === 2) {
+          return
         }
     }
    
     if (vote === 'down') {
       if (this.qualityIndex >= 1) {
         this.qualityIndex--
-      } else if(this.qualityIndex === 0) {
-        return
+      } else if (this.qualityIndex === 0) {
+          return
         }
     }
-
     this.quality = qualityArray[this.qualityIndex];
   }
 
