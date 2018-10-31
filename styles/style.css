@@ -18,7 +18,7 @@ nav {
 }
 
 .logo {
-  font-size: 37.5px;
+  font-size: 38.5px;
   padding: 10px 20px 10px 20px;
 }
 
@@ -46,6 +46,7 @@ span {
   border-radius: 0px 5px 5px 0px;
   border: solid 2px #d2cccd;
   color: #fff;
+  height: 36px;
 }
 
 .fa-search {
@@ -63,22 +64,26 @@ header {
 }
 
 .header-sect {
-  width: 60%;
   height: 250px;
+  width: 65%;
 }
 
 p {
-  padding-bottom: 5px;
   font-size: 20px;
+  padding-bottom: 5px;
 }
 
 .title-input {
+  font-size: 16px;
+  font-weight: 300;
   height: 15%;
   margin-bottom: 20px;
   width: 99%;
 }
 
 .body-input {
+  font-size: 16px;
+  font-weight: 300;
   height: 30%;
   margin-bottom: 20px;
   width: 99%;
@@ -101,7 +106,7 @@ p {
   font-size: 16px;
   height: 30px;
   margin: 20px auto;
-  width: 60%;
+  width: 65%;
 }
 
 .card-repo {
@@ -118,13 +123,13 @@ p {
   border-radius: 5px;
 }
 
-.idea-card-sect{
+.idea-card-sect {
   display: grid;
   grid-template-rows: 4fr 1fr;
-  height: 200px;
+  min-height: 200px;
   margin: 0px auto 20px auto;
   padding: 0px 16px;
-  width: 60%;
+  width: 65%;
 }
 
 .card-art {
@@ -133,9 +138,11 @@ p {
 }
 
 .title-card-style {
+  color: #524649;
   font-weight: 800;
   font-size: 25px;
-  color: #524649;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .body-card-style {
@@ -149,8 +156,8 @@ p {
 
 .card-btns {
   height: 30px;
-  width: 30px;
   padding: 5px 0px 0px 5px; 
+  width: 30px;
 }
 
 .quality-name {
@@ -165,6 +172,22 @@ p {
 }
 
 /*media query for mobile*/
+@media screen and (max-width: 900px) {
+  .header-sect,
+  .dropdown-selector,
+  .idea-card-sect {
+    width: 74%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header-sect,
+  .dropdown-selector,
+  .idea-card-sect {
+    width: 80%;
+  }
+}
+
 @media screen and (max-width: 575px) {
   nav {
     align-items: center;
@@ -172,9 +195,31 @@ p {
   }
 
   .logo {
+    font-size: 48.5px;
     margin: 0 1%;
   }
 
   .search-contain {
     margin: 0 1%;
+    padding: 12px 0px 10px 0px;
+    width: 90%;
   }
+  
+  .header-sect,
+  .dropdown-selector,
+  .idea-card-sect {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .logo {
+    font-size: 44.5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .logo {
+    font-size: 38.5px;
+  }
+}
