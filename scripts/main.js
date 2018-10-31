@@ -17,7 +17,7 @@ function cardPrepend(id, title, body, quality) {
     `<section data-key="${id}" class="idea-card-sect js-card">
           <article class="card-art">
             <p contentEditable="true" class="title-card-style js-card-title-input js-card-inputs">${title}</p>
-            <p contentEditable="true" class="js-card-inputs js-card-body-input">${body}</p>
+            <p contentEditable="true" class="body-card-style js-card-inputs js-card-body-input">${body}</p>
           </article>
           <article class="quality-art">
             <img class="card-btns js-downvote" src="./assets/downvote.svg">
