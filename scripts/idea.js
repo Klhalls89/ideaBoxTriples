@@ -32,24 +32,19 @@ class Idea {
   updateQuality(vote) {
     var qualityArray = ['Swill','Plausible','Genius'];
 
-    if (vote === 'up') {
-      if (this.qualityIndex <= 1) {
-        this.qualityIndex++
-      } else if (this.qualityIndex === 2) {
-          return
-        }
+    if ( (vote === 'up' && this.qualityIndex === 2) || (vote === 'down' && this.qualityIndex === 0) ) {
+      return;
+    }
+
+    if (vote === 'up' && this.qualityIndex <= 1) {
+        this.qualityIndex++;
     }
    
-    if (vote === 'down') {
-      if (this.qualityIndex >= 1) {
-        this.qualityIndex--
-      } else if (this.qualityIndex === 0) {
-          return
-        }
-    }
+    if (vote === 'down' && this.qualityIndex >= 1) {
+        this.qualityIndex--;
+    } 
+
     this.quality = qualityArray[this.qualityIndex];
   }
 
 }
-
-// module.exports = Idea;

@@ -1,20 +1,19 @@
 var bodyInput = document.querySelector('.js-body-input');
 var cardRepo = document.querySelector('.js-card-repo');
 var quality = document.querySelector('.js-dropdown');
-var saveBtn = document.querySelector('.js-save-btn');
 var searchInput = document.querySelector('.js-search-bar');
-var showBtn = document.querySelector('.js-show-btn');
 var titleInput = document.querySelector('.js-title-input');
 var ideaArray = [];
 
 setInitState();
 
+document.querySelector('.js-save-btn').addEventListener('click', createNewIdea);
+document.querySelector('.js-show-btn').addEventListener('click', buttonToggle);
+
 cardRepo.addEventListener('click', functionCaller);
 cardRepo.addEventListener('focusout', cardUpdate);
 quality.addEventListener('change', qualityFilter);
-saveBtn.addEventListener('click', createNewIdea);
 searchInput.addEventListener('keyup', cardSearch);
-showBtn.addEventListener('click', buttonToggle);
 
 function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
@@ -182,37 +181,36 @@ function qualityFilter() {
   });
  }
  
- function showAll() { 
+function showAll() { 
   var allCards =  document.querySelectorAll('.js-card');
   allCards = Array.from(allCards);
-  console.log(allCards);
-  for(var i = 0; i < allCards.length; i++) 
+
+  for(var i = 0; i < allCards.length; i++) {
     allCards[i].classList.remove('hidden');
   }
+}
  
 
- function buttonToggle() {
-  if(showBtn.innerText === 'Show More'){
-    showBtn.innerText = 'Show Less';
+function buttonToggle() {
+  if (this.innerText === 'Show More') {
+    this.innerText = 'Show Less';
     showAll();
   } else {
-      showBtn.innerText = 'Show More';
+      this.innerText = 'Show More';
       showTen();
-  }
- }
+    }
+}
 
- function showTen() {
+function showTen() {
   var allCards =  document.querySelectorAll('.js-card');
   allCards = Array.from(allCards);
-  console.log(allCards);
+
   for(var i = 0; i < allCards.length; i++) {
-    if(i >= 10) {
-    allCards[i].classList.add('hidden');
-   } 
+    if (i >= 10) {
+      allCards[i].classList.add('hidden');
+    } 
   }
- }   
+}   
   
-// for loop that starts at array length -10 and ends at i< array.length 
-//button for show more /less that changes the word after show as well as 
 
 
