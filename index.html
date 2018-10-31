@@ -11,13 +11,13 @@
   <body>
     <nav>
       <p class="logo">ideabox<span>triples</span></p>
-      <section class="search-contain">
+      <section class="search-contain" aria-label="Search for card ideas that include current text">
         <input class="search-bar js-search-bar"type="text" placeholder="Search">
         <button class="search-btn"><i class="fas fa-search"></i></button>
       </section>
     </nav>
     <header>
-      <section class="header-sect">
+      <section class="header-sect" aria-label="Enter information to create a new idea">
         <p>Title</p>
         <input class="title-input js-title-input" type="text" maxlength="65">
         <p>Body</p>
@@ -26,7 +26,7 @@
       </section>
     </header>
     <main>
-      <select class="dropdown-selector js-dropdown" name="quality-selctor" id="">
+      <select class="dropdown-selector js-dropdown" name="quality-selctor" aria-label="Filter through ideas based on their quality">
         <option value="All">Filter by: All</option>
         <option value="Swill">Swill</option>
         <option value="Plausible">Plausible</option>

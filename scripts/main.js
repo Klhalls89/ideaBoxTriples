@@ -1,22 +1,30 @@
 var bodyInput = document.querySelector('.js-body-input');
-var cardRepo = document.querySelector('.js-card-repo');
-var quality = document.querySelector('.js-dropdown');
 var searchInput = document.querySelector('.js-search-bar');
 var titleInput = document.querySelector('.js-title-input');
 var ideaArray = [];
 
 setInitState();
 
+document.querySelector('.js-card-repo').addEventListener('click', functionCaller);
+document.querySelector('.js-card-repo').addEventListener('focusout', cardUpdate);
+document.querySelector('.js-dropdown').addEventListener('change', qualityFilter);
 document.querySelector('.js-save-btn').addEventListener('click', createNewIdea);
 document.querySelector('.js-show-btn').addEventListener('click', buttonToggle);
 
-cardRepo.addEventListener('click', functionCaller);
-cardRepo.addEventListener('focusout', cardUpdate);
-quality.addEventListener('change', qualityFilter);
 searchInput.addEventListener('keyup', cardSearch);
 
+function buttonToggle() {
+  if (this.innerText === 'Show More') {
+    this.innerText = 'Show Less';
+    showAll();
+  } else {
+      this.innerText = 'Show More';
+      showTen();
+    }
+}
+
 function cardPrepend(id, title, body, quality) {
-  cardRepo.insertAdjacentHTML('afterbegin',
+  document.querySelector('.js-card-repo').insertAdjacentHTML('afterbegin',
     `<section data-key="${id}" class="idea-card-sect js-card">
           <article class="card-art">
             <p contentEditable="true" class="title-card-style js-card-title-input js-card-inputs">${title}</p>
@@ -87,56 +95,73 @@ function createNewIdea() {
 }
 
 function deleteCard() {
-  if (event.target.classList.contains('js-delete')) {
-    var cardKey = event.target.closest('.js-card').dataset.key;
-    cardKey = parseInt(cardKey);
+  var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
 
-    ideaArray.forEach(function(ideaInst) {
-      if (ideaInst.id === cardKey) {
-        ideaInst.deleteFromStorage(cardKey);
-      }
-    });
+  ideaArray.forEach(function(ideaInst) {
+    if (ideaInst.id === cardKey) {
+      ideaInst.deleteFromStorage(cardKey);
+    }
+  });
 
-    event.target.closest('.js-card').remove();
-  }
+  event.target.closest('.js-card').remove();
 }
 
 function downvote() {
-  if (event.target.classList.contains('js-downvote')) {
-    var cardKey = event.target.closest('.js-card').dataset.key;
-    cardKey = parseInt(cardKey);
+  var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
 
-    ideaArray.forEach(function(ideaInst) {
-      if (ideaInst.id === cardKey) {
-        var vote = 'down';
-        ideaInst.updateQuality(vote); 
-        cardKey = cardKey.toString();
-        document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
-        ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
+  ideaArray.forEach(function(ideaInst) {
+    if (ideaInst.id === cardKey) {
+      var vote = 'down';
+      ideaInst.updateQuality(vote); 
+      cardKey = cardKey.toString();
+      document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
+      ideaInst.saveToStorage(ideaArray);
+    }
+  });
 }
 
 
 function functionCaller() {
-  upvote();
-  downvote();
-  deleteCard();
+  if (event.target.classList.contains('js-upvote')) {
+    upvote();
+  } 
+
+  if (event.target.classList.contains('js-downvote')) {
+    downvote();
+  }
+
+  if (event.target.classList.contains('js-delete')) {
+    deleteCard();
+  }
+}
+
+function qualityFilter() {
+  var dropdownValue = event.target.value;
+  var allCards = document.querySelectorAll('.js-card');
+
+  allCards.forEach(function(card) {
+    var qualityArea = card.children[1].children[2];
+
+    if (qualityArea.innerText.includes(dropdownValue) || dropdownValue === 'All') {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
 }
 
 function reinstanciateParseCardArray() {
   var ideaArrayString;
   ideaArrayString = localStorage.getItem('ideasKey');
-
   ideaArray.length = 0;
-
   var jsonIdeaArray = JSON.parse(ideaArrayString); 
+
   jsonIdeaArray.forEach(function(ideaInst) {
     cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body, ideaInst.quality, ideaInst.qualityIndex);
     var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality, ideaInst.qualityIndex);
     ideaArray.push(idea);
   });
+
   showTen();
 }
 
@@ -148,39 +173,6 @@ function setInitState() {
   }
 }
 
-function upvote() {
-  if (event.target.classList.contains('js-upvote')) {
-    var cardKey = event.target.closest('.js-card').dataset.key;
-    cardKey = parseInt(cardKey);
-
-    ideaArray.forEach(function(ideaInst) {
-      if (ideaInst.id === cardKey) {
-        var vote = 'up';
-        ideaInst.updateQuality(vote); 
-        cardKey = cardKey.toString();
-        document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
-        ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
-}
-
-function qualityFilter() {
-  var dropdownValue = event.target.value;
-
-  console.log(dropdownValue);
-  var allCards = document.querySelectorAll('.js-card');
-  allCards.forEach(function(card) {
-    var qualityArea = card.children[1].children[2];
-    console.log(qualityArea.innerText);
-    if (qualityArea.innerText.includes(dropdownValue) || dropdownValue === 'All') {
-      card.classList.remove('hidden');
-    } else {
-      card.classList.add('hidden');
-    }
-  });
- }
- 
 function showAll() { 
   var allCards =  document.querySelectorAll('.js-card');
   allCards = Array.from(allCards);
@@ -188,17 +180,6 @@ function showAll() {
   for(var i = 0; i < allCards.length; i++) {
     allCards[i].classList.remove('hidden');
   }
-}
- 
-
-function buttonToggle() {
-  if (this.innerText === 'Show More') {
-    this.innerText = 'Show Less';
-    showAll();
-  } else {
-      this.innerText = 'Show More';
-      showTen();
-    }
 }
 
 function showTen() {
@@ -211,6 +192,17 @@ function showTen() {
     } 
   }
 }   
-  
 
+function upvote() {
+  var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
 
+  ideaArray.forEach(function(ideaInst) {
+    if (ideaInst.id === cardKey) {
+      var vote = 'up';
+      ideaInst.updateQuality(vote); 
+      cardKey = cardKey.toString();
+      document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
+      ideaInst.saveToStorage(ideaArray);
+    }
+  });
+}
