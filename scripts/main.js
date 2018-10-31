@@ -3,6 +3,7 @@ var cardRepo = document.querySelector('.js-card-repo');
 var quality = document.querySelector('.js-dropdown');
 var saveBtn = document.querySelector('.js-save-btn');
 var searchInput = document.querySelector('.js-search-bar');
+var showBtn = document.querySelector('.js-show-btn');
 var titleInput = document.querySelector('.js-title-input');
 var ideaArray = [];
 
@@ -13,6 +14,7 @@ cardRepo.addEventListener('focusout', cardUpdate);
 quality.addEventListener('change', qualityFilter);
 saveBtn.addEventListener('click', createNewIdea);
 searchInput.addEventListener('keyup', cardSearch);
+showBtn.addEventListener('click', buttonToggle);
 
 function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
@@ -136,6 +138,7 @@ function reinstanciateParseCardArray() {
     var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality, ideaInst.qualityIndex);
     ideaArray.push(idea);
   });
+  showTen();
 }
 
 function setInitState() {
@@ -166,7 +169,6 @@ function upvote() {
 function qualityFilter() {
   var dropdownValue = event.target.value;
 
-  //if all 
   console.log(dropdownValue);
   var allCards = document.querySelectorAll('.js-card');
   allCards.forEach(function(card) {
@@ -179,22 +181,38 @@ function qualityFilter() {
     }
   });
  }
-    
-    // only show cards that say Plausible
+ 
+ function showAll() { 
+  var allCards =  document.querySelectorAll('.js-card');
+  allCards = Array.from(allCards);
+  console.log(allCards);
+  for(var i = 0; i < allCards.length; i++) 
+    allCards[i].classList.remove('hidden');
+  }
+ 
 
+ function buttonToggle() {
+  if(showBtn.innerText === 'Show More'){
+    showBtn.innerText = 'Show Less';
+    showAll();
+  } else {
+      showBtn.innerText = 'Show More';
+      showTen();
+  }
+ }
 
-
-// funcfion(event.target.value)
-
-// function (quality)
-// if(all) {
-//   return ;
-// }
-
-// var filteredarray = originalArray.filter( card => {
-//   return card.quality === quality 
-// })
-
-
+ function showTen() {
+  var allCards =  document.querySelectorAll('.js-card');
+  allCards = Array.from(allCards);
+  console.log(allCards);
+  for(var i = 0; i < allCards.length; i++) {
+    if(i >= 10) {
+    allCards[i].classList.add('hidden');
+   } 
+  }
+ }   
+  
+// for loop that starts at array length -10 and ends at i< array.length 
+//button for show more /less that changes the word after show as well as 
 
 
