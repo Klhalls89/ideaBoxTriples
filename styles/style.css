@@ -89,7 +89,8 @@ p {
   width: 99%;
 }
 
-.save-btn {
+.save-btn,
+.show-btn {
   background-color: #524649;
   border-radius: 5px;
   color: #fff;
