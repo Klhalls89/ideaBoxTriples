@@ -1,134 +1,16 @@
-var saveBtn = document.querySelector('.js-save-btn');
-var cardRepo = document.querySelector('.js-card-repo');
-var titleInput = document.querySelector('.js-title-input');
 var bodyInput = document.querySelector('.js-body-input');
+var cardRepo = document.querySelector('.js-card-repo');
+var saveBtn = document.querySelector('.js-save-btn');
 var searchInput = document.querySelector('.js-search-bar');
+var titleInput = document.querySelector('.js-title-input');
 var ideaArray = [];
 
 setInitState();
 
-function setInitState() {
-  if(localStorage.length === 0) {
-    return
-  } else {
-    reinstanciateParseCardArray();
-  }
-}
-
-saveBtn.addEventListener('click', createNewIdea);
 cardRepo.addEventListener('click', functionCaller);
 cardRepo.addEventListener('focusout', cardUpdate);
+saveBtn.addEventListener('click', createNewIdea);
 searchInput.addEventListener('keyup', filterCards);
-
-function filterCards() {
-  var allCards = document.querySelectorAll('.js-card');
-  console.log(allCards);
-
-  allCards.forEach(function(card) {
-    var title = card.children[0].children[0];
-    var body = card.children[0].children[1];
-
-    if ( !title.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) && !body.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ) {
-      card.classList.add('hidden');
-    } else {
-      card.classList.remove('hidden');
-    }
-  });
-
-}
-
-function functionCaller(){
-  upvote();
-  downvote();
-  deleteCard();
-}
-
-function upvote(){
-  if (event.target.classList.contains('js-upvote')) {
-  var cardKey = event.target.closest('.js-card').dataset.key;
-  cardKey = parseInt(cardKey);
-
-  ideaArray.forEach(function(ideaInst){
-    if (ideaInst.id === cardKey) {
-      var vote = 'up';
-      ideaInst.updateQuality(vote); 
-      cardKey = cardKey.toString();
-      document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
-      ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
-}
-
-function downvote(){
-  if (event.target.classList.contains('js-downvote')) {
-  var cardKey = event.target.closest('.js-card').dataset.key;
-  cardKey = parseInt(cardKey);
-
-  ideaArray.forEach(function(ideaInst){
-    if (ideaInst.id === cardKey) {
-      var vote = 'down';
-      ideaInst.updateQuality(vote); 
-      cardKey = cardKey.toString();
-      document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
-      ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
-}
-
-
-function deleteCard(){
- if (event.target.classList.contains('js-delete')) {
-  var cardKey = event.target.closest('.js-card').dataset.key;
-  cardKey = parseInt(cardKey);
-
-  ideaArray.forEach(function(ideaInst){
-    if (ideaInst.id === cardKey) {
-      ideaInst.deleteFromStorage(cardKey);
-    }
-  });
-
-  console.log(ideaArray);
-  event.target.closest('.js-card').remove();
-  }
-}
-
-function createNewIdea() {
-   var idea = new Idea(titleInput.value, bodyInput.value);
-   cardPrepend(idea.id, idea.title, idea.body, idea.quality);
-   ideaArray.push(idea);
-   idea.saveToStorage(ideaArray);
-   clearInputs(); 
-}
-
-function cardUpdate() {
-  console.log('hello')
-  if (event.target.classList.contains('js-card-title-input')) {
-  var cardKey = event.target.closest('.js-card').dataset.key;
-  cardKey = parseInt(cardKey);
-  
-  ideaArray.forEach(function(ideaInst){
-    if (ideaInst.id === cardKey) {
-      ideaInst.updateSelf(event.target.innerText, event.target.nextElementSibling.innerText); 
-      ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
-
-  if (event.target.classList.contains('js-card-body-input')) {
-  var cardKey = event.target.closest('.js-card').dataset.key;
-  cardKey = parseInt(cardKey);
-  
-  ideaArray.forEach(function(ideaInst){
-    if (ideaInst.id === cardKey) {
-      ideaInst.updateSelf(event.target.previousElementSibling.innerText, event.target.innerText); 
-      ideaInst.saveToStorage(ideaArray);
-      }
-    });
-  }
-}
-
 
 function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
@@ -144,15 +26,100 @@ function cardPrepend(id, title, body, quality) {
             <img class="card-btns js-delete" src="./assets/delete.svg">
           </article>
         </section>`
-      );
-  
+  );
 };
+
+function cardUpdate() {
+  if (event.target.classList.contains('js-card-title-input')) {
+    var cardKey = event.target.closest('.js-card').dataset.key;
+    cardKey = parseInt(cardKey);
+    
+    ideaArray.forEach(function(ideaInst) {
+      if (ideaInst.id === cardKey) {
+        ideaInst.updateSelf(event.target.innerText, event.target.nextElementSibling.innerText); 
+        ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
+
+  if (event.target.classList.contains('js-card-body-input')) {
+    var cardKey = event.target.closest('.js-card').dataset.key;
+    cardKey = parseInt(cardKey);
+  
+    ideaArray.forEach(function(ideaInst) {
+      if (ideaInst.id === cardKey) {
+        ideaInst.updateSelf(event.target.previousElementSibling.innerText, event.target.innerText); 
+        ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
+}
 
 function clearInputs() {
   titleInput.value = '';
   bodyInput.value = '';
 };
 
+function createNewIdea() {
+   var idea = new Idea(titleInput.value, bodyInput.value);
+   cardPrepend(idea.id, idea.title, idea.body, idea.quality);
+   ideaArray.push(idea);
+   idea.saveToStorage(ideaArray);
+   clearInputs(); 
+}
+
+function deleteCard() {
+  if (event.target.classList.contains('js-delete')) {
+    var cardKey = event.target.closest('.js-card').dataset.key;
+    cardKey = parseInt(cardKey);
+
+    ideaArray.forEach(function(ideaInst) {
+      if (ideaInst.id === cardKey) {
+        ideaInst.deleteFromStorage(cardKey);
+      }
+    });
+
+    event.target.closest('.js-card').remove();
+  }
+}
+
+function downvote() {
+  if (event.target.classList.contains('js-downvote')) {
+    var cardKey = event.target.closest('.js-card').dataset.key;
+    cardKey = parseInt(cardKey);
+
+    ideaArray.forEach(function(ideaInst) {
+      if (ideaInst.id === cardKey) {
+        var vote = 'down';
+        ideaInst.updateQuality(vote); 
+        cardKey = cardKey.toString();
+        document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
+        ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
+}
+
+function filterCards() {
+  var allCards = document.querySelectorAll('.js-card');
+
+  allCards.forEach(function(card) {
+    var title = card.children[0].children[0];
+    var body = card.children[0].children[1];
+
+    if ( !title.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) && !body.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ) {
+      card.classList.add('hidden');
+    } else {
+      card.classList.remove('hidden');
+    }
+  });
+}
+
+function functionCaller() {
+  upvote();
+  downvote();
+  deleteCard();
+}
 
 function reinstanciateParseCardArray() {
   var ideaArrayString;
@@ -164,10 +131,33 @@ function reinstanciateParseCardArray() {
   jsonIdeaArray.forEach(function(ideaInst) {
     cardPrepend(ideaInst.id, ideaInst.title, ideaInst.body, ideaInst.quality, ideaInst.qualityIndex);
     var idea = new Idea(ideaInst.title, ideaInst.body, ideaInst.id, ideaInst.quality, ideaInst.qualityIndex);
-
     ideaArray.push(idea);
-   
   });
+}
+
+function setInitState() {
+  if (localStorage.length === 0) {
+    return
+  } else {
+    reinstanciateParseCardArray();
+  }
+}
+
+function upvote() {
+  if (event.target.classList.contains('js-upvote')) {
+    var cardKey = event.target.closest('.js-card').dataset.key;
+    cardKey = parseInt(cardKey);
+
+    ideaArray.forEach(function(ideaInst) {
+      if (ideaInst.id === cardKey) {
+        var vote = 'up';
+        ideaInst.updateQuality(vote); 
+        cardKey = cardKey.toString();
+        document.getElementById(cardKey).innerText = `Quality: ${ideaInst.quality}`;
+        ideaInst.saveToStorage(ideaArray);
+      }
+    });
+  }
 }
 
 // funcfion(event.target.value)
