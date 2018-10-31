@@ -1,5 +1,6 @@
 var bodyInput = document.querySelector('.js-body-input');
 var cardRepo = document.querySelector('.js-card-repo');
+var quality = document.querySelector('.js-dropdown');
 var saveBtn = document.querySelector('.js-save-btn');
 var searchInput = document.querySelector('.js-search-bar');
 var titleInput = document.querySelector('.js-title-input');
@@ -9,8 +10,9 @@ setInitState();
 
 cardRepo.addEventListener('click', functionCaller);
 cardRepo.addEventListener('focusout', cardUpdate);
+quality.addEventListener('change', qualityFilter);
 saveBtn.addEventListener('click', createNewIdea);
-searchInput.addEventListener('keyup', filterCards);
+searchInput.addEventListener('keyup', cardSearch);
 
 function cardPrepend(id, title, body, quality) {
   cardRepo.insertAdjacentHTML('afterbegin',
@@ -28,6 +30,21 @@ function cardPrepend(id, title, body, quality) {
         </section>`
   );
 };
+
+function cardSearch() {
+  var allCards = document.querySelectorAll('.js-card');
+
+  allCards.forEach(function(card) {
+    var title = card.children[0].children[0];
+    var body = card.children[0].children[1];
+
+    if ( !title.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) && !body.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ) {
+      card.classList.add('hidden');
+    } else {
+      card.classList.remove('hidden');
+    }
+  });
+}
 
 function cardUpdate() {
   if (event.target.classList.contains('js-card-title-input')) {
@@ -100,20 +117,6 @@ function downvote() {
   }
 }
 
-function filterCards() {
-  var allCards = document.querySelectorAll('.js-card');
-
-  allCards.forEach(function(card) {
-    var title = card.children[0].children[0];
-    var body = card.children[0].children[1];
-
-    if ( !title.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) && !body.innerText.toLowerCase().includes(searchInput.value.toLowerCase()) ) {
-      card.classList.add('hidden');
-    } else {
-      card.classList.remove('hidden');
-    }
-  });
-}
 
 function functionCaller() {
   upvote();
@@ -159,6 +162,27 @@ function upvote() {
     });
   }
 }
+
+function qualityFilter() {
+  var dropdownValue = event.target.value;
+
+  //if all 
+  console.log(dropdownValue);
+  var allCards = document.querySelectorAll('.js-card');
+  allCards.forEach(function(card) {
+    var qualityArea = card.children[1].children[2];
+    console.log(qualityArea.innerText);
+    if (qualityArea.innerText.includes(dropdownValue) || dropdownValue === 'All') {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+ }
+    
+    // only show cards that say Plausible
+
+
 
 // funcfion(event.target.value)
 
