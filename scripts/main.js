@@ -13,6 +13,17 @@ document.querySelector('.js-show-btn').addEventListener('click', buttonToggle);
 
 searchInput.addEventListener('keyup', cardSearch);
 
+function bodyUpdate() {
+  var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
+  
+  ideaArray.forEach(function(ideaInst) {
+    if (ideaInst.id === cardKey) {
+      ideaInst.updateSelf(event.target.previousElementSibling.innerText, event.target.innerText); 
+      ideaInst.saveToStorage(ideaArray);
+    }
+  });
+}
+
 function buttonToggle() {
   if (this.innerText === 'Show More') {
     this.innerText = 'Show Less';
@@ -57,27 +68,11 @@ function cardSearch() {
 
 function cardUpdate() {
   if (event.target.classList.contains('js-card-title-input')) {
-    var cardKey = event.target.closest('.js-card').dataset.key;
-    cardKey = parseInt(cardKey);
-    
-    ideaArray.forEach(function(ideaInst) {
-      if (ideaInst.id === cardKey) {
-        ideaInst.updateSelf(event.target.innerText, event.target.nextElementSibling.innerText); 
-        ideaInst.saveToStorage(ideaArray);
-      }
-    });
+    titleUpdate();
   }
 
   if (event.target.classList.contains('js-card-body-input')) {
-    var cardKey = event.target.closest('.js-card').dataset.key;
-    cardKey = parseInt(cardKey);
-  
-    ideaArray.forEach(function(ideaInst) {
-      if (ideaInst.id === cardKey) {
-        ideaInst.updateSelf(event.target.previousElementSibling.innerText, event.target.innerText); 
-        ideaInst.saveToStorage(ideaArray);
-      }
-    });
+    bodyUpdate();
   }
 }
 
@@ -192,6 +187,17 @@ function showTen() {
     } 
   }
 }   
+
+function titleUpdate() {
+  var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
+    
+  ideaArray.forEach(function(ideaInst) {
+    if (ideaInst.id === cardKey) {
+      ideaInst.updateSelf(event.target.innerText, event.target.nextElementSibling.innerText); 
+      ideaInst.saveToStorage(ideaArray);
+    }
+  });
+}
 
 function upvote() {
   var cardKey = parseInt(event.target.closest('.js-card').dataset.key);
